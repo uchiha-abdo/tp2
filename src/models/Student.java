@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Arrays;
+
 import enums.Gender;
 
 public class Student {
@@ -86,4 +88,6 @@ public class Student {
                 ", parent=" + parent +
                 '}';
     }
+
+	
 }

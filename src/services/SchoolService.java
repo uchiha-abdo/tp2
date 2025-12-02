@@ -41,7 +41,7 @@ public class SchoolService {
 
     public Subject searchCourseByTitle(String title){
         for (Subject subject : subjects){
-            if (subject.getTitle().equalsIgnoreCase(title)){
+            if (subject != null && subject.getTitle().equalsIgnoreCase(title)){
                 return subject;
             }
         }
@@ -70,14 +70,27 @@ public class SchoolService {
             }
         }
     }
+    public Teacher searchTeacherByName(String firstName, String lastName) {
+        for (Teacher teacher : teachers) {
+            if (teacher != null &&
+                teacher.getFirstName().equalsIgnoreCase(firstName) &&
+                teacher.getLastName().equalsIgnoreCase(lastName)) {
+
+                return teacher;
+            }
+        }
+        System.err.println("Teacher " + firstName + " " + lastName + " not found.");
+        return null;
+    }
+
     /**
-     * Teacher's CRUD
+     * Parents CRUD
      */
     public void insertParent(Parent parent) {
         for (int i = 0; i < parents.length; i++) {
             if (parents[i] == null){
                 parents[i] = parent;
-                System.out.println("Parent " + parent.getLastName() + " " + parent.getFirstName() + " inserted successfully.");
+                System.out.println("Parent inserted successfully.");
                 return;
             }
         }
@@ -92,6 +105,17 @@ public class SchoolService {
             }
         }
     }
+    public Parent searchParentByName(String firstName) {
+        for (Parent parent : parents) {
+            if (parent != null &&
+                parent.getFirstName().equalsIgnoreCase(firstName)) {
+
+                return parent;
+            }
+        }
+        System.err.println("P " + firstName + " not found.");
+        return null;
+    }
     /**
      * Students's CRUD
      */
@@ -99,7 +123,7 @@ public class SchoolService {
         for (int i = 0; i < students.length; i++) {
             if (students[i] == null){
                 students[i] = student;
-                System.out.println("Student " + student.getLastName() + " " + student.getFirstName() + " inserted successfully.");
+                System.out.println("Student inserted successfully.");
                 return;
             }
         }
@@ -113,4 +137,16 @@ public class SchoolService {
             }
         }
     }
+    public Student searchStudentByName(String firstName) {
+        for (Student student : students) {
+            if (student != null &&
+                student.getFirstName().equalsIgnoreCase(firstName)) {
+
+                return student;
+            }
+        }
+        System.err.println("Student " + firstName + " not found.");
+        return null;
+    }
+
 }

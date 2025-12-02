@@ -9,11 +9,13 @@ import services.SchoolService;
 
 import java.util.Scanner;
 
+import dao.MemoryDatabase;
+
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         SchoolService schoolService = new SchoolService();
-        Parent parent ;
+        Parent parent;
         Student student;
         Teacher teacher;
         Subject subject;
@@ -36,15 +38,19 @@ public class Main {
                 case 1:
                     schoolService.showAllTeachers();
                     break;
+                    
                 case 2:
                     schoolService.showAllSubjects();
                     break;
+                    
                 case 3:
                     schoolService.showAllParents();
                     break;
+                    
                 case 4:
                     schoolService.showAllStudents();
                     break;
+                    
                 case 6:
                     subject = new Subject();
                     System.out.print("\tEntrer le nom de la matiere : ");
@@ -53,6 +59,7 @@ public class Main {
                     subject.setCoefficient(input.nextInt());
                     schoolService.insertSubject(subject);
                     break;
+                    
                 case 5:
                     teacher = new Teacher();
                     System.out.print("\t Entrer le firstName : ");
@@ -83,6 +90,7 @@ public class Main {
                     teacher.setSubjects(new Subject[] {schoolService.searchCourseByTitle(input.next())});
                     schoolService.insertTeacher(teacher);
                     break;
+                    
                 case 8:
                 	schoolService.showAllStudents();
                 	student = new Student();
@@ -110,8 +118,33 @@ public class Main {
                             System.err.println("Invalid gender");
                         }
                     }
-                    System.out.print("\t Entrer la nom et prenom de parent parent : ");
+                    
+                 
+                    System.out.println("\t --- Assignation du Parent ---");
+                    schoolService.showAllParents();
+
+                    System.out.print("\t Entrer le prénom du parent : ");
+                     String searchFirstName = input.next();
+
+                    Parent foundParent = null;
+                    
+                    for(Parent p : MemoryDatabase.PARENTS_T) {
+                        if(p != null && p.getFirstName().equalsIgnoreCase(searchFirstName)) {
+                        foundParent = p;
                     break;
+                    }
+                    }
+
+                    if (foundParent != null) {
+
+                    student.setParent(foundParent); 
+                    schoolService.insertStudent(student);
+                    }
+                    else {
+                    System.err.println("Erreur : Aucun parent trouvé avec le prénom '" + searchFirstName + "'. Insertion annulée.");
+                    }
+                    break;
+                    
                 case 7:
                     schoolService.showAllParents();
                     parent = new Parent();
@@ -139,8 +172,9 @@ public class Main {
                             System.err.println("Invalid gender");
                         }
                     }
-                    System.out.print("\t Entrer la nom et prenom de parent parent : ");
+                    schoolService.insertParent(parent);
                     break;
+                    
                 case 9:
                     break;
                 default:
